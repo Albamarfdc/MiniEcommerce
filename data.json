@@ -1,0 +1,56 @@
+[{
+  "id": 1,
+  "name": "Html",
+  "img": "./img/html.png",
+  "price": 10
+
+
+},
+{
+  "id": 2,
+  "name": "Css",
+  "img": "./img/css.png",
+  "price": 10
+
+},
+{
+  "id": 3,
+  "name": "Javascript",
+  "img": "./img/js.png",
+  "price": 15
+
+},
+{
+  "id": 4,
+  "name": "React",
+  "img": "./img/react.png",
+  "price": 15
+},
+{
+  "id": 5,
+  "name": "Node",
+  "img": "./img/node.png",
+  "price": 15
+
+},
+{
+  "id": 6,
+  "name": "GitHub",
+  "img": "./img/git.png",
+  "price": 20
+
+},
+{
+  "id": 7,
+  "name": "Dev",
+  "img": "./img/dev.png",
+  "price": 30
+},
+{
+  "id": 8,
+  "name": "Console.log",
+  "img": "./img/console.log.png",
+  "price": 30
+
+}
+]
