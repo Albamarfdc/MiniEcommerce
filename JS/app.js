@@ -235,18 +235,12 @@ document.querySelector('nav > div > form > button')
             },
         }).showToast();
     }
-    
-
-
 
   });
     
 
 
-
-
-/* Checking if there is a localStorage, if there is, it updates the cart and the counterCart, if there
-isn't, it sets the localStorage to an empty array. */
+//Boton de vaciar carrito
 let localCart = JSON.parse(localStorage.getItem('Carrito'));
 if (localCart) {
  updateCart(localCart);
@@ -256,11 +250,18 @@ if (localCart) {
 }
 
 
-/* An event listener that is listening for a click on the clear button, when it is clicked, it shows a
-sweet alert, if the user clicks on the confirm button, it sets the localStorage to an empty array,
-updates the cart, and updates the counterCart. */
+//Funcion para eliminar productos del carrito
 const emptyCart = document.getElementById("clear")
 emptyCart.addEventListener('click', () => {
+  let cartStorage = JSON.parse(localStorage.getItem('Carrito') || '[]');
+  if (cartStorage.length == 0) {
+    Swal.fire({
+      icon: 'error',
+      text: "your cart is empty",
+      icon: "error",
+      confirmButtonText: "ok",
+    })
+  } else {
 Swal.fire({
   title: 'Are you sure?',
   text: "You won't be able to revert this!",
@@ -278,33 +279,85 @@ Swal.fire({
       'Deleted!',
       'your cart has been deleted.',
       'success'
-    )}})})
+    )}})}});
 
-
-
+/* Buy Button */
 const buy = document.getElementById("buy")
 buy.addEventListener('click', (e) => {
-e.preventDefault();
-    if (JSON.parse(localStorage.getItem('Carrito')).length > 0) {
-        localStorage.setItem('Carrito', '[]');
-        updateCart([]);
-        counterCart.innerHTML = "";
+  e.preventDefault();
+  let cartStorage = JSON.parse(localStorage.getItem('Carrito') || '[]');
+  if (cartStorage.length == 0) {
+    Swal.fire({
+      icon: 'error',
+      text: "your cart is empty",
+      icon: "error",
+      confirmButtonText: "ok",
+    })
+  } else {
+    Swal.fire({
+      title: 'Complete for your order',
+      html: `<form id="form" class="form">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email">
+        </div>
+        </form>`,
+      showCancelButton: true,
+      confirmButtonText: 'Send',
+      showLoaderOnConfirm: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let order = { buyer: { name: name, email: email } ,date: new Date().toLocaleString() };
         Swal.fire({
-            icon: 'success',
-            title: 'Your purchase was successful',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Ok'
+          html: `<form id="form">
+            <div class="col-12">
+              <h2>Order Summary</h2>
+              <p>${order.date}</p>
+            </div>
+          </div>  
+            <div class="col-12">
+              <h3>Buyer</h3>
+              <p>Name: ${order.buyer.name}</p>
+              <p>Email: ${order.buyer.email}</p>
+            </div>
+          </div>
+            <div class="col-12">
+              <h3>Products</h3>
+              <ul>
+                ${cartStorage.map((product) => {
+                  return `<li> T-Shirt:  ${product.name} - Qty: ${product.qty}</li>`
+                }).join('')}
+
+              </ul>
+            </div>
+          </div>
+
+            <div class="col-12">
+              <h3>Total</h3>
+              <p>$${cartStorage.reduce((acc, product) => acc + product.qty * product.price, 0)}</p>
+            </div>
+          </div>
+        </div>`
+        }).then((result) => {
+          if (result.isConfirmed) {
+            localStorage.setItem('Carrito', '[]');
+            updateCart([]);
+            counterCart.innerHTML = "";
+            Swal.fire({
+              icon: 'success',
+              title: 'Your order was sent successfully, we will contact you soon',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'Ok'
+            })
+          }
         })
-    }else {
-           Swal.fire({
-            icon: 'error',
-               text: "your cart is empty",
-               icon: "error",
-               confirmButtonText: "ok",
-           })
-    }
+      }
+    })
+  }
 })
-
-
-
-
