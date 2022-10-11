@@ -322,7 +322,7 @@ h3.cart {
   }
   #cart-counter {
   position: absolute;
-  top: 35px;
+  top: 20px;
   }
 }
 
@@ -349,8 +349,24 @@ h3.cart {
   position: absolute;
   top: 35px;
   }
+.nav > form {
+ display: none;
+}
 
 }
 
 
+footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.541);
+  color: white;
+  text-align: center;
+}
  
+#linkedin{
+  font-size: 30px;
+  margin: 10px;
+}

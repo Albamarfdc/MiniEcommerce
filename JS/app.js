@@ -22,15 +22,11 @@ function productsDom() {
     });
 }
 
-/* Selecting the cart and the cart counter. */
 const cartContainer = document.querySelector('#cart');
 const counterCart = document.querySelector('#cart-counter');
 
 
-/**
- * It adds items to the cart and updates the cart counter.
- * @param id - The id of the product that is being added to the cart.
- */
+
 function addItems(id) {
   Toastify({
     text: "Product added",
@@ -64,10 +60,7 @@ function addItems(id) {
     });
 }
 
-/**
- * It deletes a product from the cart and updates the cart.
- * @param id - The id of the product to be deleted.
- */
+
 function deleteProduct(id) {
   Toastify({
     text: "Product deleted",
@@ -91,10 +84,7 @@ function deleteProduct(id) {
 }
 
 
-/**
- * It adds a product to the cart and updates the cart counter.
- * @param id - The id of the product
- */
+
 const addQty = (id) => {
   Toastify({
     text: "Product added",
@@ -118,14 +108,6 @@ const addQty = (id) => {
   counterCart.innerHTML = cartStorage.reduce((acc, product) => acc + product.qty,0);
 };
 
-/**
- * It takes an id as an argument, parses the localStorage, loops through the parsed localStorage,
- * checks if the id of the target is equal to the id of the product, if it is, it checks if the
- * quantity of the product is greater than 1, if it is, it decrements the quantity of the product by 1,
- * if it isn't, it sets the quantity of the product to 1, then it sets the localStorage to the updated
- * cartStorage, updates the cart, and updates the counterCart.
- * @param id - the id of the product
- */
 
 const restQty = (id) => {
     Toastify({
@@ -149,10 +131,7 @@ const restQty = (id) => {
 };
 
 
-/**
- * It returns the sum of the prices of all the products in the cart.
- * @param local - the array of objects that is the cart
- */
+
 function updateCart(local) {
   cartContainer.innerHTML = '';
   local.forEach((p) => {
@@ -215,25 +194,29 @@ document.querySelector('nav > div > form > button')
           </div>
         </div>
       </div>`;
-            }).join('');
+          }).join('');
+
+          document.querySelector('nav > div > form > input').value = '';
+
             const btns = document.querySelectorAll('.add');
             btns.forEach((btn) => {
                 btn.addEventListener('click', (e) => {
                     let cartStorage = JSON.parse(localStorage.getItem('Carrito'));
                     if (cartStorage == null) {
                         cartStorage = [];
-                    }
+                  }
                     let id = e.target.id;
                     let product = data.find((item) => item.id == id);
                     let productInCart = cartStorage.find((item) => item.id == id);
                     if (productInCart) {
                         productInCart.qty++;
                     } else {
-                        cartStorage.push({ ...product, qty: 1 } );
+                      cartStorage.push({ ...product, qty: 1 });
                     }
                     localStorage.setItem('Carrito', JSON.stringify(cartStorage));
                     counterCart.innerHTML = cartStorage.reduce((acc, product) => acc + product.qty, 0);
-                    updateCart(cartStorage);
+                  updateCart(cartStorage);
+                  location.href="index.html";
                 }
                 )
             });
@@ -251,7 +234,11 @@ document.querySelector('nav > div > form > button')
                 background: "linear-gradient(to right, #df2020, #c70202",
             },
         }).showToast();
-      }
+    }
+    
+
+
+
   });
     
 
