@@ -204,8 +204,8 @@ h3.cart {
 }
 
 .sumar {
-  font-size: 20px;
-  border-radius: 15px;
+  font-size: 30px;
+
   color: #17ee03a1;
   cursor: pointer;
 }
@@ -214,8 +214,7 @@ h3.cart {
 }
 
 .restar {
-  font-size: 20px;
-  border-radius: 15px;
+  font-size: 30px;
   color: #c94343;
   cursor: pointer;
 }

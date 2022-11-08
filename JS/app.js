@@ -80,28 +80,29 @@ function deleteProduct(id) {
   localStorage.setItem('Carrito', JSON.stringify(cartStorage));
   counterCart.innerHTML = cartStorage.reduce(
     (acc, product) => acc + product.qty,
-    ''
+    0
   );
   updateCart(cartStorage);
 }
 
 const addQty = (id) => {
-  Toastify({
-    text: 'Product added',
-    duration: 1500,
-    newWindow: true,
-    close: false,
-    gravity: 'bottom',
-    position: 'right',
-    stopOnFocus: true,
-    style: {
-      background: 'linear-gradient(to right, #62d150, #1e9830)',
-    },
-  }).showToast();
+
   let cartStorage = JSON.parse(localStorage.getItem('Carrito'));
   cartStorage.forEach((product) => {
     if (product.id == id.target.id) {
       product.qty++;
+      Toastify({
+        text: 'Product added',
+        duration: 1500,
+        newWindow: true,
+        close: false,
+        gravity: 'bottom',
+        position: 'right',
+        stopOnFocus: true,
+        style: {
+          background: 'linear-gradient(to right, #62d150, #1e9830)',
+        },
+      }).showToast();
     }
   });
   localStorage.setItem('Carrito', JSON.stringify(cartStorage));
@@ -113,30 +114,29 @@ const addQty = (id) => {
 };
 
 const restQty = (id) => {
-  Toastify({
-    text: 'Product deleted',
-    duration: 1500,
-    newWindow: true,
-    close: false,
-    gravity: 'bottom',
-    position: 'right',
-    stopOnFocus: true,
-    style: {
-      background: 'linear-gradient(to right, #df2020, #c70202',
-    },
-  }).showToast();
   let cartStorage = JSON.parse(localStorage.getItem('Carrito'));
   cartStorage.forEach((product) => {
-    if (id.target.id == product.id) {
+    if (id.target.id == product.id && product.qty > 1) {
       product.qty > 1 ? product.qty-- : (product.qty = 1);
+      Toastify({
+        text: 'Product deleted',
+        duration: 1500,
+        newWindow: true,
+        close: false,
+        gravity: 'bottom',
+        position: 'right',
+        stopOnFocus: true,
+        style: {
+          background: 'linear-gradient(to right, #df2020, #c70202',
+        },
+      }).showToast();
     }
   });
   localStorage.setItem('Carrito', JSON.stringify(cartStorage));
   updateCart(cartStorage);
   counterCart.innerHTML = cartStorage.reduce(
     (acc, product) => acc + product.qty,
-    ''
-  );
+    0);
 };
 
 function updateCart(local) {
@@ -146,9 +146,9 @@ function updateCart(local) {
     <img  src=${p.img} width="70">
          <div class="ml-3"><span class="font-weight-bold d-block ml-3">${p.name}</span>
          <span class="d-block ml-5 font-weight-bold">$${p.price}</span></div>
-         <span id="${p.id}" class="restar btn-sm mr-1"><i class="fa fa-circle-minus"></i></span>
          <span class="d-block ml-5 font-weight-bold">Item: ${p.qty}</span>
-         <span id="${p.id}" class="sumar btn-sm mr-2"><i class="fa fa-circle-plus"></i></span>
+         <span id="${p.id}" class="restar btn-sm">-</i></span>
+         <span id="${p.id}" class="sumar btn-sm ">+</i></span>
          <span class="eliminar-item" id= "#${p.qty}"> <i class="fa fa-trash" aria-hidden="true"></i> </span>
   </div>
   `;
